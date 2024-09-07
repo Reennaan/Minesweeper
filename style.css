@@ -1,0 +1,57 @@
+#field{
+    background-color: #AAA;
+    width: 31rem;
+    height: 31rem;
+    margin: auto;
+    margin-top: 10%;
+    text-align: center;
+    display: flex;
+    
+}
+#info{
+    font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
+}
+#field-inside{
+    margin: auto;
+    background-color: #AAA;
+    width: 28.279rem;
+    height: 26rem;
+    border: 5px solid #ccc;
+    border-image: linear-gradient(-8deg, #6b6b6b, rgb(218, 218, 218)) 1;
+    box-shadow: inset 3px 9px 10px rgba(0, 0, 0, 0.0), 
+              inset -1px -1px 5px rgba(1, 1, 1, 1);
+}
+.btn-mines{
+    width: 1rem;
+    height: 2.5rem;
+    font-family: 'Arial', sans-serif;
+    color: black;
+    background-color: #d9d9d9;
+    border: 2px solid #fff;
+    border-right: 2px solid #808080; 
+    border-bottom: 2px solid #808080; 
+    padding: 5px 20px;
+    box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #808080;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    box-sizing: border-box;
+    margin:0;
+    align-items: center;
+
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;
+
+    
+}
+.btn-mines:active {
+    border: 2px solid #808080;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    background-color: #c0c0c0;
+}
+
+.row{
+    margin-left: .0625rem;
+}
