@@ -21,6 +21,27 @@ window.onload = function createField(){
                 img = btn.querySelector(".img")
                 img.style.visibility = "visible"
             }
+            if(btn.textContent === "" && !btn.querySelector(".img")){
+                btn.classList.add('pressed')
+                let nextBtn = btn.nextElementSibling
+                let previousBtn = btn.previousElementSibling
+
+                clearmap(btn.id,nextBtn)
+                clearmap(btn.id,previousBtn)
+                /*while(nextBtn){
+                    if(nextBtn.querySelector(".img")){
+                        break;
+                    }
+                    if(nextBtn.textContent.length >= 1){
+                        nextBtn.style.fontSize = "large"
+                        break;
+                    }
+                    nextBtn.classList.add("pressed")
+                    nextBtn = nextBtn.nextElementSibling;
+                }*/
+
+
+            }
             
         })
         row.appendChild(btn)
@@ -29,9 +50,27 @@ window.onload = function createField(){
     }
     var btn = document.getElementsByClassName("btn-mines")
     creatMap(btn,bombNumber)
-    
-
 }
+
+    function clearmap (id,btn){
+        while(btn){
+            if(btn.querySelector(".img")){
+                break;
+            }
+            if(btn.textContent.length >= 1){
+                btn.style.fontSize = "large"
+                break;
+            }
+            btn.classList.add("pressed")
+            if(id < btn.id){
+              btn = btn.nextElementSibling; 
+            }else{
+                btn = btn.previousElementSibling;
+            }
+            
+        }
+    }
+
 
     function creatMap(btn,bombNumber){
 
