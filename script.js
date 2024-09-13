@@ -20,27 +20,14 @@ window.onload = function createField(){
             if(btn.querySelector(".img")){
                 img = btn.querySelector(".img")
                 img.style.visibility = "visible"
+                btn.classList.add('unpressed')
+                
             }
             if(btn.textContent === "" && !btn.querySelector(".img")){
                 btn.classList.add('pressed')
-                let nextBtn = btn.nextElementSibling
-                let previousBtn = btn.previousElementSibling
-
-                clearmap(btn.id,nextBtn)
-                clearmap(btn.id,previousBtn)
-                /*while(nextBtn){
-                    if(nextBtn.querySelector(".img")){
-                        break;
-                    }
-                    if(nextBtn.textContent.length >= 1){
-                        nextBtn.style.fontSize = "large"
-                        break;
-                    }
-                    nextBtn.classList.add("pressed")
-                    nextBtn = nextBtn.nextElementSibling;
-                }*/
-
-
+                clearmap(btn.id)
+                clearmaptop(btn.id);
+                
             }
             
         })
@@ -48,26 +35,61 @@ window.onload = function createField(){
         field.appendChild(row)
         
     }
+
+
     var btn = document.getElementsByClassName("btn-mines")
     creatMap(btn,bombNumber)
 }
 
-    function clearmap (id,btn){
-        while(btn){
-            if(btn.querySelector(".img")){
-                break;
-            }
-            if(btn.textContent.length >= 1){
-                btn.style.fontSize = "large"
-                break;
-            }
-            btn.classList.add("pressed")
-            if(id < btn.id){
-              btn = btn.nextElementSibling; 
-            }else{
-                btn = btn.previousElementSibling;
-            }
+    function clearmaptop(id){
+        const allbtn = document.querySelectorAll(".btn-mines")
+        id = parseInt(id);
+        console.log(Number(id -10))
+        for(let b = -10; Number(id - b) >=0 ; b = b + 10){
             
+            if(allbtn[id - b] && allbtn[id - b].id >=0 && allbtn[id - b].textContent.length <= 0 && !allbtn[id -b].querySelector(".img") ){
+                clearmap(allbtn[id - b].id)
+            }
+        }
+            
+        for(let b = 10 ; Number(id) + b <= 100; b += 10){
+            if (allbtn[id + b] && allbtn[id + b].id <= 100 && allbtn[id + b].textContent.length <= 0 && !allbtn[id + b].querySelector(".img")) {
+                clearmap(allbtn[id + b].id);        
+            }
+        }
+
+    }
+
+
+    function clearmap (id){
+        var btns = document.getElementsByClassName("btn-mines")
+        id = parseInt(id);
+        for(let i = id;i <= btns.length;i++){
+            if(isBorderRight(i) && btns[i].textContent.length <= 0){
+                btns[i].classList.add('pressed')
+                break;
+            }
+            if(btns[i].textContent.length >= 1){
+                btns[i].style.fontSize = "larger"
+                break;
+            }else{
+                btns[i].classList.add('pressed')
+            }
+        }
+        for(let i = id ;i <= btns.length;i--){
+            if(isBorderLeft(i) && btns[i].textContent.length <= 0){
+                btns[i].classList.add('pressed')
+                break;
+            }
+            if(btns[i].textContent.length >= 1){
+                btns[i].style.fontSize = "larger"
+
+                break;
+
+            }else{
+                btns[i].classList.add('pressed')
+            }
+
         }
     }
 
@@ -123,6 +145,8 @@ window.onload = function createField(){
                 button.style.color = "darkblue"
 
         })
+
+
 
         
     }
