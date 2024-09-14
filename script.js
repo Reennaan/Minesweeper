@@ -25,8 +25,13 @@ window.onload = function createField(){
             }
             if(btn.textContent === "" && !btn.querySelector(".img")){
                 btn.classList.add('pressed')
-                clearmap(btn.id)
-                clearmaptop(btn.id);
+                
+                clearvertical(btn.id)
+                clearhorizont(btn.id)
+                
+
+                
+                
                 
             }
             
@@ -41,31 +46,50 @@ window.onload = function createField(){
     creatMap(btn,bombNumber)
 }
 
-    function clearmaptop(id){
+
+    function clearvertical(id){
         const allbtn = document.querySelectorAll(".btn-mines")
         id = parseInt(id);
         console.log(Number(id -10))
         for(let b = -10; Number(id - b) >=0 ; b = b + 10){
-            
-            if(allbtn[id - b] && allbtn[id - b].id >=0 && allbtn[id - b].textContent.length <= 0 && !allbtn[id -b].querySelector(".img") ){
-                clearmap(allbtn[id - b].id)
+            if(allbtn[id - b] && allbtn[id - b].textContent.length > 0 ){
+                allbtn[id - b].style.fontSize = "larger"
+                break
             }
+
+            if(allbtn[id - b] && allbtn[id - b].id >=0 && !allbtn[id -b].querySelector(".img") ){
+                clearhorizont(allbtn[id - b].id)
+            }
+        
         }
             
         for(let b = 10 ; Number(id) + b <= 100; b += 10){
-            if (allbtn[id + b] && allbtn[id + b].id <= 100 && allbtn[id + b].textContent.length <= 0 && !allbtn[id + b].querySelector(".img")) {
-                clearmap(allbtn[id + b].id);        
+            if(allbtn[id + b] && allbtn[id + b].textContent.length > 0 ){
+                allbtn[id + b].style.fontSize = "larger"
+                break
+            }
+
+            if (allbtn[id + b] && allbtn[id + b].id <= 100  && !allbtn[id + b].querySelector(".img")) {
+                clearhorizont(allbtn[id + b].id);        
             }
         }
 
     }
 
 
-    function clearmap (id){
+    function clearhorizont (id){
         var btns = document.getElementsByClassName("btn-mines")
         id = parseInt(id);
+        var left = [0,10,20,30,40,50,60,70,80,90]
+        var right = [9,19,29,39,49,59,69,79,89,99]
+      
+
         for(let i = id;i <= btns.length;i++){
-            if(isBorderRight(i) && btns[i].textContent.length <= 0){
+            if(btns[i + 10] ){
+                btns[i + 10].style.fontSize = "larger"
+            }
+        
+            if(right.includes(i)){
                 btns[i].classList.add('pressed')
                 break;
             }
@@ -74,25 +98,36 @@ window.onload = function createField(){
                 break;
             }else{
                 btns[i].classList.add('pressed')
+                if(btns[i + 10])    
+                    btns[i + 10].style.fontSize = "larger" 
             }
+            
+
         }
+
+
         for(let i = id ;i <= btns.length;i--){
-            if(isBorderLeft(i) && btns[i].textContent.length <= 0){
+            
+            if(btns[i - 10]){
+                btns[i - 10].style.fontSize = "larger"
+            }
+            
+            if(left.includes(i)){
                 btns[i].classList.add('pressed')
                 break;
             }
             if(btns[i].textContent.length >= 1){
                 btns[i].style.fontSize = "larger"
-
                 break;
-
             }else{
                 btns[i].classList.add('pressed')
+                if(btns[i - 10])    
+                btns[i - 10].style.fontSize = "larger" 
+               
             }
 
         }
     }
-
 
     function creatMap(btn,bombNumber){
 
@@ -105,30 +140,34 @@ window.onload = function createField(){
             img.height = 25
             img.style.visibility = "hidden"
             btn[idNumber].appendChild(img)
-            
+            var left = [0,10,20,30,40,50,60,70,80,90]
+            var right = [9,19,29,39,49,59,69,79,89,99]
+            var top = [0,1,2,3,4,5,6,7,8,9]
+            var bottom = [90,91,92,93,94,95,96,97,98,99]
+        
 
-            if(idNumber - 10 >= 0  && !isBorderTop(idNumber) && hasIncluded(bombNumber,idNumber - 10))
+            if(idNumber - 10 >= 0  && !top.includes(idNumber) && hasIncluded(bombNumber,idNumber - 10))
                 btn[bombNumber[i]-10].textContent = Number(btn[bombNumber[i]-10].textContent) + 1
 
-            if(idNumber - 11 >= 0 && !isBorderLeft(idNumber) && !isBorderTop(idNumber)&& hasIncluded(bombNumber,idNumber - 11))
+            if(idNumber - 11 >= 0 && !left.includes(idNumber) && !top.includes(idNumber)&& hasIncluded(bombNumber,idNumber - 11))
                 btn[bombNumber[i]-11].textContent = Number(btn[bombNumber[i]-11].textContent) + 1
 
-            if(idNumber - 9 >= 0 && !isBorderRight(idNumber) && !isBorderTop(idNumber)&& hasIncluded(bombNumber,idNumber - 9))
+            if(idNumber - 9 >= 0 && !right.includes(idNumber) && !top.includes(idNumber)&& hasIncluded(bombNumber,idNumber - 9))
                 btn[bombNumber[i]-9].textContent = Number(btn[bombNumber[i]-9].textContent)+1
 
-            if(idNumber -1 >= 0 && !isBorderLeft(idNumber)&& hasIncluded(bombNumber,idNumber - 1))
+            if(idNumber -1 >= 0 && !left.includes(idNumber)&& hasIncluded(bombNumber,idNumber - 1))
                 btn[bombNumber[i]-1].textContent = Number(btn[bombNumber[i]-1].textContent) + 1
 
-            if(idNumber + 1 <= 100 && !isBorderRight(idNumber)&& hasIncluded(bombNumber,idNumber + 1))
+            if(idNumber + 1 <= 100 && !right.includes(idNumber)&& hasIncluded(bombNumber,idNumber + 1))
                 btn[bombNumber[i]+1].textContent = Number(btn[bombNumber[i]+1].textContent) + 1
              
-            if(idNumber + 10 <= 100 && !isBorderBottom(idNumber)&& hasIncluded(bombNumber,idNumber + 10))
+            if(idNumber + 10 <= 100 && !bottom.includes(idNumber)&& hasIncluded(bombNumber,idNumber + 10))
                 btn[bombNumber[i]+10].textContent = Number(btn[bombNumber[i]+10].textContent) + 1
             
-            if(idNumber + 9 <= 100 && !isBorderLeft(idNumber) && !isBorderBottom(idNumber)&& hasIncluded(bombNumber,idNumber + 9))
+            if(idNumber + 9 <= 100 && !left.includes(idNumber) && !bottom.includes(idNumber)&& hasIncluded(bombNumber,idNumber + 9))
                 btn[bombNumber[i]+9].textContent = Number(btn[bombNumber[i]+9].textContent) + 1
             
-            if(idNumber + 11 <= 100 && !isBorderRight(idNumber) && !isBorderBottom(idNumber)&& hasIncluded(bombNumber,idNumber + 11))
+            if(idNumber + 11 <= 100 && !right.includes(idNumber) && !bottom.includes(idNumber)&& hasIncluded(bombNumber,idNumber + 11))
                 btn[bombNumber[i]+11].textContent = Number(btn[bombNumber[i]+11].textContent) + 1
             
             
@@ -145,10 +184,7 @@ window.onload = function createField(){
                 button.style.color = "darkblue"
 
         })
-
-
-
-        
+   
     }
 
     function hasIncluded(bombnumber,btn){
@@ -159,52 +195,6 @@ window.onload = function createField(){
         }
     }
     
-
-    function isBorderLeft(idNumber){
-        var left = [0,10,20,30,40,50,60,70,80,90]
-        border = false;
-        for(let i =0; i <= left.length ;i++){
-            if(left[i] === idNumber){
-                border = true
-            }
-        }
-        return border
-    }
-
-    function isBorderRight(idNumber){
-        var right = [9,19,29,39,49,59,69,79,89,99]
-        border = false;
-        for(let i =0; i <= right.length ;i++){
-            if(right[i] === idNumber){
-                border = true
-            }
-        }
-        return border
-    }
-    
-    function isBorderTop(idNumber){
-        var top = [0,1,2,3,4,5,6,7,8,9]
-        border = false;
-        for(let i =0; i <= top.length ;i++){
-            if(top[i] === idNumber){
-                border = true
-            }
-        }
-        return border
-    }
-
-    function isBorderBottom(idNumber){
-        var top = [90,91,92,93,94,95,96,97,98,99]
-        border = false;
-        for(let i =0; i <= top.length ;i++){
-            if(top[i] === idNumber){
-                border = true
-            }
-        }
-        return border
-    }
-
-
 
     function getRamdomNumber(min,max){
         var random = []
