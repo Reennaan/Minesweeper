@@ -26,13 +26,9 @@ window.onload = function createField(){
             if(btn.textContent === "" && !btn.querySelector(".img")){
                 btn.classList.add('pressed')
                 
-                clearvertical(btn.id)
+                //clearvertical(btn.id)
                 clearhorizont(btn.id)
-                
-
-                
-                
-                
+            
             }
             
         })
@@ -44,34 +40,41 @@ window.onload = function createField(){
 
     var btn = document.getElementsByClassName("btn-mines")
     creatMap(btn,bombNumber)
+
 }
 
 
+
+
     function clearvertical(id){
-        const allbtn = document.querySelectorAll(".btn-mines")
-        id = parseInt(id);
-        console.log(Number(id -10))
-        for(let b = -10; Number(id - b) >=0 ; b = b + 10){
-            if(allbtn[id - b] && allbtn[id - b].textContent.length > 0 ){
-                allbtn[id - b].style.fontSize = "larger"
+        var btns = document.getElementsByClassName("btn-mines")
+        var left = [0,10,20,30,40,50,60,70,80,90]
+        var right = [9,19,29,39,49,59,69,79,89,99]
+
+
+        for(let i = 0; btns[id - i] ; i = i + 10 ){
+            if(btns[id - i] && btns[id - i].textContent.length <= 0 && !btns[id - i].querySelector(".img")){
+                btns[id - i].classList.add('pressed')
+                
+                if(btns[(id - i) - 1] && left.includes(btns[(id - i) - 1]))
+                    btns[(id  - i) - 1].style.fontSize = "larger"
+            }else{
+                btns[id  - i].style.fontSize = "larger"
                 break
             }
-
-            if(allbtn[id - b] && allbtn[id - b].id >=0 && !allbtn[id -b].querySelector(".img") ){
-                clearhorizont(allbtn[id - b].id)
-            }
-        
         }
-            
-        for(let b = 10 ; Number(id) + b <= 100; b += 10){
-            if(allbtn[id + b] && allbtn[id + b].textContent.length > 0 ){
-                allbtn[id + b].style.fontSize = "larger"
+        
+        for(let i = 0; btns[id + i]; i = i + 10 ){
+            if(btns[id + i] && btns[id + i].textContent.length <= 0  && !btns[id + i].querySelector(".img")){
+                btns[id + i].classList.add('pressed')
+                if(btns[(id +i)+1] && right.includes(btns[(id + i) + 1])){
+                    btns[(id  + i) + 1].style.fontSize = "larger"
+                }
+                }else{
+                    btns[id + i].style.fontSize = "larger"
                 break
             }
-
-            if (allbtn[id + b] && allbtn[id + b].id <= 100  && !allbtn[id + b].querySelector(".img")) {
-                clearhorizont(allbtn[id + b].id);        
-            }
+             
         }
 
     }
@@ -82,51 +85,32 @@ window.onload = function createField(){
         id = parseInt(id);
         var left = [0,10,20,30,40,50,60,70,80,90]
         var right = [9,19,29,39,49,59,69,79,89,99]
-      
-
-        for(let i = id;i <= btns.length;i++){
-            if(btns[i + 10] ){
-                btns[i + 10].style.fontSize = "larger"
-            }
-        
-            if(right.includes(i)){
+        for(let i = id ;btns[i] && btns[i].textContent.length <= 0 && !right.includes(i-1); i++){
+                
+            if(btns[i])
                 btns[i].classList.add('pressed')
-                break;
-            }
-            if(btns[i].textContent.length >= 1){
-                btns[i].style.fontSize = "larger"
-                break;
-            }else{
-                btns[i].classList.add('pressed')
-                if(btns[i + 10])    
-                    btns[i + 10].style.fontSize = "larger" 
-            }
-            
-
+            if(btns[i + 11]) //revelo todos os botões com numeros em baixo
+                btns[i + 11].style.fontSize = "larger"
+            if(btns[i - 11] ) //revelo todos os botões com numeros em cima
+                btns[i - 11].style.fontSize = "larger"       
+            if(btns[i + 1] && !right.includes(i))
+                btns[i + 1].style.fontSize = "larger"
+                clearvertical(i)      
         }
 
-
-        for(let i = id ;i <= btns.length;i--){
-            
-            if(btns[i - 10]){
+        for(let i = id ; btns[i] && btns[i].textContent.length <= 0 && !left.includes(i+1) ; i--){
+                
+            if(btns[i])
+                btns[i].classList.add('pressed')
+            if(btns[i - 10]) //revelo todos os botões com numeros em cima
                 btns[i - 10].style.fontSize = "larger"
-            }
-            
-            if(left.includes(i)){
-                btns[i].classList.add('pressed')
-                break;
-            }
-            if(btns[i].textContent.length >= 1){
-                btns[i].style.fontSize = "larger"
-                break;
-            }else{
-                btns[i].classList.add('pressed')
-                if(btns[i - 10])    
-                btns[i - 10].style.fontSize = "larger" 
-               
-            }
-
+            if(btns[i + 10]) //revelo todos os botões com numeros em baixo
+                btns[i + 10].style.fontSize = "larger"    
+            if(btns[i - 1] && !left.includes(i))
+                btns[i - 1].style.fontSize = "larger"
+                clearvertical(i)
         }
+
     }
 
     function creatMap(btn,bombNumber){
