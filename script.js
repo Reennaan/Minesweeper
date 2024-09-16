@@ -46,36 +46,48 @@ window.onload = function createField(){
 
 
 
-    function clearvertical(id){
+    function clearvertical(verticalid){
         var btns = document.getElementsByClassName("btn-mines")
-        var left = [0,10,20,30,40,50,60,70,80,90]
-        var right = [9,19,29,39,49,59,69,79,89,99]
-
-
-        for(let i = 0; btns[id - i] ; i = i + 10 ){
-            if(btns[id - i] && btns[id - i].textContent.length <= 0 && !btns[id - i].querySelector(".img")){
-                btns[id - i].classList.add('pressed')
-                
-                if(btns[(id - i) - 1] && left.includes(btns[(id - i) - 1]))
-                    btns[(id  - i) - 1].style.fontSize = "larger"
-            }else{
-                btns[id  - i].style.fontSize = "larger"
-                break
-            }
-        }
+        const horizont = [0,10,20,30,40,50,60,70,80,90,9,19,29,39,49,59,69,79,89,99]
+        var clearhorizontid = []
         
-        for(let i = 0; btns[id + i]; i = i + 10 ){
-            if(btns[id + i] && btns[id + i].textContent.length <= 0  && !btns[id + i].querySelector(".img")){
-                btns[id + i].classList.add('pressed')
-                if(btns[(id +i)+1] && right.includes(btns[(id + i) + 1])){
-                    btns[(id  + i) + 1].style.fontSize = "larger"
+        
+        for(let i = 0;i <= verticalid.length; i++){
+            for(let b = 0 ; btns[verticalid[i] + b] && btns[verticalid[i]+ b].textContent.length <= 0; b = b +10){
+                
+                btns[verticalid[i] + b].classList.add('pressed')
+                if(btns[verticalid[i] + b +1] && !horizont.includes(verticalid[i] + b +1)){
+                    btns[verticalid[i] + b +1].style.fontSize = "larger"
                 }
-                }else{
-                    btns[id + i].style.fontSize = "larger"
-                break
+                if(btns[verticalid[i] + b -1] && !horizont.includes(verticalid[i] + b -1)){
+                    btns[verticalid[i] + b -1].style.fontSize = "larger"
+                }
             }
-             
         }
+
+        for(let i = 0;i <= verticalid.length; i++){
+            for(let b = 0 ; btns[verticalid[i] - b] && btns[verticalid[i] - b].textContent.length <= 0; b = b +10){
+                btns[verticalid[i] - b].classList.add('pressed')
+                if(btns[verticalid[i] - b +1] && !horizont.includes(verticalid[i] + b +1)){
+                    btns[verticalid[i] - b +1].style.fontSize = "larger"
+                }
+                if(btns[verticalid[i] - b -1] && !horizont.includes(verticalid[i] + b -1)){
+                    btns[verticalid[i] - b -1].style.fontSize = "larger"
+                }
+              
+
+            }
+        }
+
+        console.log(clearhorizontid)
+
+
+
+
+        /*for(let i = verticalid; btns[i] && btns[i].textContent.length <= 0; i = i - 10){
+            btns[i].classList.add('pressed')
+        }*/
+        
 
     }
 
@@ -85,31 +97,60 @@ window.onload = function createField(){
         id = parseInt(id);
         var left = [0,10,20,30,40,50,60,70,80,90]
         var right = [9,19,29,39,49,59,69,79,89,99]
-        for(let i = id ;btns[i] && btns[i].textContent.length <= 0 && !right.includes(i-1); i++){
+        var top = [0,1,2,3,4,5,6,7,8,9]
+        var bottom = [90,91,92,93,94,95,96,97,98,99]
+        const clearverticalid =[]
+
+
+        for(let i = id;btns[i] && btns[i].textContent.length <= 0 && !right.includes(i-1); i++){//lembre-se do i-1 ai
                 
             if(btns[i])
                 btns[i].classList.add('pressed')
-            if(btns[i + 11]) //revelo todos os botões com numeros em baixo
-                btns[i + 11].style.fontSize = "larger"
-            if(btns[i - 11] ) //revelo todos os botões com numeros em cima
-                btns[i - 11].style.fontSize = "larger"       
-            if(btns[i + 1] && !right.includes(i))
+            
+            if(btns[i - 10] && btns[i - 10].textContent.length > 0){
+                btns[i - 10].style.fontSize = "larger"
+            }else{
+                clearverticalid.push(i - 10)
+            }
+
+            if(btns[i + 10] && btns[i + 10].textContent.length > 0){
+                btns[i + 10].style.fontSize = "larger"
+            }else{
+                clearverticalid.push(i + 10)
+            }
+           
+    
+            if(btns[i + 1] && !right.includes(i) &&  i != 99 ){
                 btns[i + 1].style.fontSize = "larger"
-                clearvertical(i)      
+            } 
+                //clearvertical(i)      
         }
 
-        for(let i = id ; btns[i] && btns[i].textContent.length <= 0 && !left.includes(i+1) ; i--){
+        for(let i = id ; btns[i] && btns[i].textContent.length <= 0 && !left.includes(i+1) ; i--){ //lembre-se do i+1 ai
                 
             if(btns[i])
                 btns[i].classList.add('pressed')
-            if(btns[i - 10]) //revelo todos os botões com numeros em cima
+
+            if(btns[i - 10] && btns[i - 10].textContent.length > 0){
                 btns[i - 10].style.fontSize = "larger"
-            if(btns[i + 10]) //revelo todos os botões com numeros em baixo
-                btns[i + 10].style.fontSize = "larger"    
+            }else{
+                clearverticalid.push(i - 10)
+            }
+
+            if(btns[i + 10] && btns[i + 10].textContent.length > 0){
+                btns[i + 10].style.fontSize = "larger"
+            }else{
+                clearverticalid.push(i + 10)
+            } 
+
+
             if(btns[i - 1] && !left.includes(i))
                 btns[i - 1].style.fontSize = "larger"
-                clearvertical(i)
+
+            
+                
         }
+        clearvertical(clearverticalid);
 
     }
 
