@@ -145,7 +145,7 @@ window.onload = function createField(){
             }
         })
         
-        if(exec < 9){
+        if(exec < 10){
             notpressed.forEach(i =>{
                 clearhorizont(i);
             })
