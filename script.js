@@ -49,48 +49,82 @@ window.onload = function createField(){
     function clearvertical(verticalid){
         var btns = document.getElementsByClassName("btn-mines")
         const horizont = [0,10,20,30,40,50,60,70,80,90,9,19,29,39,49,59,69,79,89,99]
+        var topbottom = [0,1,2,3,4,5,6,7,8,9,90,91,92,93,94,95,96,97,98,99]
+        
         var clearhorizontid = []
         
         
         for(let i = 0;i <= verticalid.length; i++){
             for(let b = 0 ; btns[verticalid[i] + b] && btns[verticalid[i]+ b].textContent.length <= 0; b = b +10){
-                
-                btns[verticalid[i] + b].classList.add('pressed')
-                if(btns[verticalid[i] + b +1] && !horizont.includes(verticalid[i] + b +1)){
-                    btns[verticalid[i] + b +1].style.fontSize = "larger"
+                let vid = verticalid[i] + b
+
+                btns[vid].classList.add('pressed')
+                if(btns[vid+1] && !horizont.includes(vid +1)){
+                    btns[vid+1].style.fontSize = "larger"
                 }
-                if(btns[verticalid[i] + b -1] && !horizont.includes(verticalid[i] + b -1)){
-                    btns[verticalid[i] + b -1].style.fontSize = "larger"
+                
+                if(btns[vid -1] && !horizont.includes(vid -1)){
+                    btns[vid-1].style.fontSize = "larger"
+                }
+                if(btns[vid+10] && btns[vid+10].textContent.length > 0 && !topbottom.includes(btns[vid+10])){
+                    btns[vid+10].style.fontSize = "larger"
+                }
+
+                if(btns[vid+1] && !horizont.includes(vid +1) && btns[vid+1].textContent.length <=0  && !clearhorizontid.includes(vid+1)){
+                    clearhorizontid.push(btns[vid+1])
+                }
+                if(btns[vid-1] && !horizont.includes(vid -1) && btns[vid-1].textContent.length <=0  && !clearhorizontid.includes(vid-1)){
+                    clearhorizontid.push(btns[vid-1])
                 }
             }
         }
+
+
 
         for(let i = 0;i <= verticalid.length; i++){
             for(let b = 0 ; btns[verticalid[i] - b] && btns[verticalid[i] - b].textContent.length <= 0; b = b +10){
-                btns[verticalid[i] - b].classList.add('pressed')
-                if(btns[verticalid[i] - b +1] && !horizont.includes(verticalid[i] + b +1)){
-                    btns[verticalid[i] - b +1].style.fontSize = "larger"
+                let vid = verticalid[i] - b
+
+                
+                btns[vid].classList.add('pressed')
+                if(btns[vid+1] && !horizont.includes(vid +1)){
+                    btns[vid +1].style.fontSize = "larger"
                 }
-                if(btns[verticalid[i] - b -1] && !horizont.includes(verticalid[i] + b -1)){
-                    btns[verticalid[i] - b -1].style.fontSize = "larger"
+                if(btns[vid -1] && !horizont.includes(vid -1)){
+                    btns[vid -1].style.fontSize = "larger"
                 }
-              
+                if(btns[vid-10] && btns[vid-10].textContent.length > 0 && !topbottom.includes(btns[vid-10])){
+                    btns[vid-10].style.fontSize = "larger"
+                }
+                
+                if(btns[vid+1] && !horizont.includes(vid +1) && btns[vid+1].textContent.length <=0 &&  !clearhorizontid.includes(vid+1)){
+                    clearhorizontid.push(btns[vid+1])
+                }
+                if(btns[vid-1] && !horizont.includes(vid -1) && btns[vid-1].textContent.length <=0  && !clearhorizontid.includes(vid-1)){
+                    clearhorizontid.push(btns[vid-1])
+                }
 
             }
         }
 
-        console.log(clearhorizontid)
-
-
-
-
-        /*for(let i = verticalid; btns[i] && btns[i].textContent.length <= 0; i = i - 10){
-            btns[i].classList.add('pressed')
-        }*/
+        const notpressed = new Set()
+        clearhorizontid.forEach(clearid =>{
+            if(!clearid.classList.contains('pressed')){
+                notpressed.add(Number(clearid.id))
+            }
+        })
+        
+        if(exec < 3){
+            notpressed.forEach(i =>{
+                clearhorizont(i);
+            })
+            exec += 1
+        }
+        
         
 
     }
-
+var exec = 0
 
     function clearhorizont (id){
         var btns = document.getElementsByClassName("btn-mines")
@@ -150,7 +184,9 @@ window.onload = function createField(){
             
                 
         }
+
         clearvertical(clearverticalid);
+        
 
     }
 
