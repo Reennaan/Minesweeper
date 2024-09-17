@@ -1,5 +1,8 @@
 window.onload = function createField(){
     const field = document.getElementById("field-inside")
+
+    field.innerHTML = '';
+
     const row = document.createElement("div")
 
     row.className = "row row-cols-4"
@@ -29,6 +32,11 @@ window.onload = function createField(){
                     fartsound.play() 
                 }, 1000); 
                 actvatebomb()
+                setTimeout(()=>{
+                    createField()
+
+                },3000)
+
 
             }
             if(btn.textContent === "" && !btn.querySelector(".img")){
@@ -46,6 +54,8 @@ window.onload = function createField(){
     creatMap(btn,bombNumber)
 
 }
+
+
 
     function actvatebomb() {
         var btn = document.getElementsByClassName("btn-mines");
