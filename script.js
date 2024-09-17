@@ -145,11 +145,12 @@ window.onload = function createField(){
             }
         })
         
-        if(exec < 10){
+        if(exec < 15){
             notpressed.forEach(i =>{
                 clearhorizont(i);
             })
             exec += 1
+            console.log(exec)
         }
         
         
