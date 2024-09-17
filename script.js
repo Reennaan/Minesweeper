@@ -17,30 +17,51 @@ window.onload = function createField(){
         btn.id = i
         btn.addEventListener("click",() =>{
             btn.style.fontSize = "larger"
+            const numberclick = new Audio('sounds/numberclick.wav')
+            numberclick.play()
             if(btn.querySelector(".img")){
                 img = btn.querySelector(".img")
                 img.style.visibility = "visible"
                 btn.classList.add('unpressed')
-                
+                setTimeout(() => {
+                    img.src = "img/explosion.gif";
+                    const fartsound = new Audio('sounds/fart.wav')
+                    fartsound.play() 
+                }, 1000); 
+                actvatebomb()
+
             }
             if(btn.textContent === "" && !btn.querySelector(".img")){
+                const clicksound = new Audio('sounds/retroclick.wav')
+                clicksound.play()
                 btn.classList.add('pressed')
-                
-                //clearvertical(btn.id)
                 clearhorizont(btn.id)
-            
             }
             
         })
         row.appendChild(btn)
-        field.appendChild(row)
-        
+        field.appendChild(row)   
     }
-
-
     var btn = document.getElementsByClassName("btn-mines")
     creatMap(btn,bombNumber)
 
+}
+
+    function actvatebomb() {
+        var btn = document.getElementsByClassName("btn-mines");
+    
+        Array.from(btn).forEach(i => {
+        if (i.textContent <= 0 && !i.querySelector(".img")) {
+            i.classList.add('pressed');
+        } else {
+            const imgElement = i.querySelector(".img");
+            if (imgElement) {
+                imgElement.style.visibility = "visible";
+                
+            }
+            i.style.fontSize = "larger";
+        }
+    });
 }
 
 
@@ -70,10 +91,10 @@ window.onload = function createField(){
                     btns[vid+10].style.fontSize = "larger"
                 }
 
-                if(btns[vid+1] && !horizont.includes(vid +1) && btns[vid+1].textContent.length <=0  && !clearhorizontid.includes(vid+1)){
+                if(btns[vid+1] && !horizont.includes(vid +1) && btns[vid+1].textContent.length <=0 ){
                     clearhorizontid.push(btns[vid+1])
                 }
-                if(btns[vid-1] && !horizont.includes(vid -1) && btns[vid-1].textContent.length <=0  && !clearhorizontid.includes(vid-1)){
+                if(btns[vid-1] && !horizont.includes(vid -1) && btns[vid-1].textContent.length <=0){
                     clearhorizontid.push(btns[vid-1])
                 }
             }
@@ -97,10 +118,10 @@ window.onload = function createField(){
                     btns[vid-10].style.fontSize = "larger"
                 }
                 
-                if(btns[vid+1] && !horizont.includes(vid +1) && btns[vid+1].textContent.length <=0 &&  !clearhorizontid.includes(vid+1)){
+                if(btns[vid+1] && !horizont.includes(vid +1) && btns[vid+1].textContent.length <=0 ){
                     clearhorizontid.push(btns[vid+1])
                 }
-                if(btns[vid-1] && !horizont.includes(vid -1) && btns[vid-1].textContent.length <=0  && !clearhorizontid.includes(vid-1)){
+                if(btns[vid-1] && !horizont.includes(vid -1) && btns[vid-1].textContent.length <=0){
                     clearhorizontid.push(btns[vid-1])
                 }
 
@@ -114,7 +135,7 @@ window.onload = function createField(){
             }
         })
         
-        if(exec < 3){
+        if(exec < 9){
             notpressed.forEach(i =>{
                 clearhorizont(i);
             })
@@ -131,12 +152,10 @@ var exec = 0
         id = parseInt(id);
         var left = [0,10,20,30,40,50,60,70,80,90]
         var right = [9,19,29,39,49,59,69,79,89,99]
-        var top = [0,1,2,3,4,5,6,7,8,9]
-        var bottom = [90,91,92,93,94,95,96,97,98,99]
         const clearverticalid =[]
 
 
-        for(let i = id;btns[i] && btns[i].textContent.length <= 0 && !right.includes(i-1); i++){//lembre-se do i-1 ai
+        for(let i = id;btns[i] && btns[i].textContent.length <= 0 && !right.includes(i-1); i++){
                 
             if(btns[i])
                 btns[i].classList.add('pressed')
@@ -153,14 +172,13 @@ var exec = 0
                 clearverticalid.push(i + 10)
             }
            
-    
             if(btns[i + 1] && !right.includes(i) &&  i != 99 ){
                 btns[i + 1].style.fontSize = "larger"
             } 
-                //clearvertical(i)      
+                     
         }
 
-        for(let i = id ; btns[i] && btns[i].textContent.length <= 0 && !left.includes(i+1) ; i--){ //lembre-se do i+1 ai
+        for(let i = id ; btns[i] && btns[i].textContent.length <= 0 && !left.includes(i+1) ; i--){
                 
             if(btns[i])
                 btns[i].classList.add('pressed')
@@ -269,5 +287,3 @@ var exec = 0
         }
         return random
     }
-
- 
